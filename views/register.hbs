@@ -1,0 +1,229 @@
+<main id="main">
+    <div class="breadcrumbs" data-aos="fade-in">
+        <h1>{{head}}</h1>
+    </div>
+    {{#if signup}}
+        <div class="form row" id="signin" style="display: none;">
+            <div class="col-md-8 mx-auto pt-4">
+                <form method="POST" action="/register/signin">
+                    <div class="form-group row">
+                        <label for="email" class="col-sm-2 col-form-label">Email</label>
+                        <div class="col-sm-10">
+                        <input type="text" class="form-control-plaintext" name="email">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+                        <div class="col-sm-10">
+                        <input type="password" class="form-control" name="password" placeholder="Password">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                    <div class="col-sm-10 mx-auto">
+                        <input type="submit" value="SignIn">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-10 mx-auto">
+                        <a href="#signupForm" id="switchToSignup">SignUp</a> if you dont have an account.
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    <!-- SignUP -->
+        <div class="form row mt-4" id="signupForm">
+            <div class="col-md-8 mx-auto">
+                <form method="POST" action="/register/signup">
+            <div class="form-group row">
+                    <label for="name" class="col-sm-2 col-form-label">Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control-plaintext" name="name" placeholder="Name">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="email" class="col-sm-2 col-form-label">Email</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control-plaintext" name="email" placeholder="email@example.com">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="phone" class="col-sm-2 col-form-label">Phone Number</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" name="phone" placeholder="Phone">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+                    <div class="col-sm-5">
+                        <input type="password" class="form-control" name="password" placeholder="Password">
+                    </div>
+                    <div class="col-sm-5">
+                        <input type="password" class="form-control" name="inputPassword2" placeholder="Confirm Password">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="role" class="col-sm-2 col-form-label">SignUp as:</label>
+                    <div class="col-sm-10">
+                    <select class="form-control" name="role">
+                        <option value="teacher">Teacher</option>
+                        <option value="student">Student</option>
+                    </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-10 mx-auto">
+                        <input type="submit" value="SignUp">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-10 mx-auto">
+                        <a href="#signin" id="switchToSignin">Login</a> if you already have an account.
+                    </div>
+                </div>
+            </form>
+            </div>
+        </div>
+    {{/if}}
+    <!-- RoleWise Form -->
+    {{#if student}}
+        <div class="form row" id="student">
+            <div class="col-md-8 mx-auto pt-4">
+                <form method="POST" action="/register/student">
+                    <div class="form-group row">
+                        <label for="degree" class="col-sm-2 col-form-label">Degree *</label>
+                        <div class="col-sm-10">
+                        <input type="text" required class="form-control-plaintext" name="degree" placeholder="degree">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="school" class="col-sm-2 col-form-label">School Name / University Name *</label>
+                        <div class="col-sm-10">
+                        <input type="text" class="form-control" required name="school" placeholder="School/University">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="genderPreference" class="col-sm-2 col-form-label">Gender Preference for Teacher *</label>
+                        <div class="col-sm-10">
+                        <select name="genderPreference" required>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="both">Male/Female</option>
+                        </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="requirement" class="col-sm-2 col-form-label">Details of your Requirement</label>
+                        <div class="col-sm-10">
+                        <input type="text" class="form-control" name="requirement" placeholder="Requirement Details">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="fee" class="col-sm-2 col-form-label">Fee Details (Please Mention whether you will give per hour or per month) *</label>
+                        <div class="col-sm-10">
+                        <input type="text" class="form-control" name="fee" required placeholder="Fee Details">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                    <div class="col-sm-10 mx-auto">
+                        <input type="submit" value="Submit">
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    {{/if}}
+    <!-- Teacher Form -->
+    {{#if teacher}}
+        <div class="form row" id="teacher">
+            <div class="col-md-8 mx-auto pt-4">
+                <form method="POST" action="/register/teacher">
+                    <div class="form-group row">
+                        <label for="profileHeadline" class="col-sm-2 col-form-label">Your profile Headline *</label>
+                        <div class="col-sm-10">
+                        <input type="text" required class="form-control-plaintext" name="profileHeadline" placeholder="degree">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="dob" class="col-sm-2 col-form-label">Date of Birth *</label>
+                        <div class="col-sm-10">
+                        <input type="date" class="form-control" required name="dob" placeholder="School/University">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="subjects" class="col-sm-2 col-form-label">Subjects you can Teach *</label>
+                        <div class="col-sm-10">
+                        <input type="text" class="form-control" required name="subjects" placeholder="Enter subjects">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="expertise" class="col-sm-2 col-form-label">Level Of Expertise *</label>
+                        <div class="col-sm-10">
+                        <select name="expertise" required>
+                            <option value="school16">School 1 to 6</option>
+                            <option value="school10">High School (Upto 10th)</option>
+                            <option value="school12">Senior Secondary School (Upto 12th)</option>
+                            <option value="jee-neet">JEE / NEET Level</option>
+                            <option value="graduation">Graduation Level</option>
+                            <option value="postgraduation">PostGraduation Level</option>
+                        </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="highestQualName" class="col-sm-2 col-form-label">Details of your Highest Qualification *</label>
+                        <div class="col-sm-10">
+                        <input type="text" class="form-control" required name="highestQualName" placeholder="Degree Name">
+                        </div>
+                        <div class="col-sm-5">
+                        <input type="text" class="form-control" required name="highestQualMarks" placeholder="Percentage">
+                        </div>
+                        <div class="col-sm-5">
+                        <input type="text" class="form-control" required name="highestQualSchool" placeholder="School/University">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="otherQualName" class="col-sm-2 col-form-label">Any Other Qualification</label>
+                        <div class="col-sm-10">
+                        <input type="text" class="form-control" name="otherQualName" placeholder="Degree Name">
+                        </div>
+                        <div class="col-sm-5">
+                        <input type="text" class="form-control" name="otherQualMarks" placeholder="Percentage">
+                        </div>
+                        <div class="col-sm-5">
+                        <input type="text" class="form-control" name="otherQualSchool" placeholder="School/University">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="marks10" class="col-sm-2 col-form-label">Class 10th Percentage *</label>
+                        <div class="col-sm-10">
+                        <input type="text" class="form-control" name="marks10" required placeholder="%">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="marks12" class="col-sm-2 col-form-label">Class 12th Percentage *</label>
+                        <div class="col-sm-10">
+                        <input type="text" class="form-control" name="marks12" required placeholder="%">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="otherDetails" class="col-sm-2 col-form-label">Any Other Details</label>
+                        <div class="col-sm-10">
+                        <input type="text" class="form-control" name="otherDetails" placeholder="Other Details">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="fee" class="col-sm-2 col-form-label">Fee Details</label>
+                        <div class="col-sm-10">
+                        <input type="text" class="form-control" name="fee" placeholder="Fee">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-10 mx-auto">
+                            <input type="submit" value="Submit">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    {{/if}}
+</main>
