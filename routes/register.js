@@ -35,7 +35,14 @@ var Teachers = mongoose.model('Teachers', teacherSchema);
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.render('register', { head: 'SignUp', signup: 'true' });
+    if (!req.session.user)
+        req.session.signup = true;
+    else req.session.signup = false;
+    res.render('register', {
+        head: 'SignUp',
+        signup: req.session.signup,
+        name: req.session.user
+    });
 });
 
 // router.post('/api', (req, res, next) => {
@@ -149,14 +156,20 @@ router.post('/signin', (req, res, next) => {
                 console.log(user.email);
                 if (user.password === password) {
                     console.log('Successfully Logged in...');
+                    req.session.user = user.email;
                     res.redirect('/');
                 } else {
                     console.log('Password incorrect...');
-                    res.redirect('register');
+                    res.redirect('/register');
                 }
             })
         }
     })
+})
+
+router.post('/signout', (req, res, next) => {
+    req.session = null;
+    res.redirect('/register');
 })
 
 module.exports = router;

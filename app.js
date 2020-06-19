@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var hbs = require('express-handlebars');
 var logger = require('morgan');
+var cookieSession = require('cookie-session');
 
 
 var indexRouter = require('./routes/index');
@@ -15,6 +16,11 @@ var registerRouter = require('./routes/register');
 var profileRouter = require('./routes/profile');
 var app = express();
 
+app.set('trust proxy', 1);
+app.use(cookieSession({
+    name: 'session',
+    keys: ['jamia1234554321', 'jamia9087bhu']
+}));
 // view engine setup
 //app.set('views', path.join(__dirname, 'views'));
 //app.set('partials', path.join(__dirname, 'partials'))
