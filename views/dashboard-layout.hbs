@@ -27,12 +27,10 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    {{#if body.profile}}
-        <h2>Profile Mode on</h2>
-    {{/if}}
-    {{>header}}
     {{{body}}}
-    {{>footer}}
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/vendor/jquery.easing/jquery.easing.min.js"></script>
     <script src="/javascripts/plugins/perfect-scrollbar.jquery.min.js"></script>
     <!--  Google Maps Plugin    -->
     <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
