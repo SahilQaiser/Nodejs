@@ -165,11 +165,6 @@ router.post('/signin', (req, res, next) => {
             })
         }
     })
-})
-
-router.post('/signout', (req, res, next) => {
-    req.session = null;
-    res.redirect('/register');
-})
+});
 
 module.exports = router;
