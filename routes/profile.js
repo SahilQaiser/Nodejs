@@ -12,7 +12,10 @@ var user = {
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.render('profile', { user: user, layout: 'dashboard-layout' });
+    if (!req.session.user)
+        res.redirect('/');
+    else
+        res.render('profile', { user: user, layout: 'dashboard-layout' });
 });
 // SignOut
 router.post('/signout', (req, res, next) => {
@@ -22,19 +25,31 @@ router.post('/signout', (req, res, next) => {
 
 /* GET User Profile. */
 router.get('/user', function(req, res, next) {
-    res.render('user-profile', { user: user, layout: 'dashboard-layout' });
+    if (!req.session.user)
+        res.redirect('/');
+    else
+        res.render('user-profile', { user: user, layout: 'dashboard-layout' });
 });
 /* GET User Profile. */
 router.get('/notifications', function(req, res, next) {
-    res.render('notifications', { layout: 'dashboard-layout' });
+    if (!req.session.user)
+        res.redirect('/');
+    else
+        res.render('notifications', { layout: 'dashboard-layout' });
 });
 
 /* GET User Profile. */
 router.get('/tables', function(req, res, next) {
-    res.render('tables', { layout: 'dashboard-layout' });
+    if (!req.session.user)
+        res.redirect('/');
+    else
+        res.render('tables', { layout: 'dashboard-layout' });
 });
 /* GET User Profile. */
 router.get('/upgrade', function(req, res, next) {
-    res.render('upgrade', { layout: 'dashboard-layout' });
+    if (!req.session.user)
+        res.redirect('/');
+    else
+        res.render('upgrade', { layout: 'dashboard-layout' });
 });
 module.exports = router;

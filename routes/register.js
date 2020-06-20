@@ -69,8 +69,11 @@ router.post('/signup', (req, res, next) => {
                 if (err) {
                     console.log(err);
                     console.error('User cannot be Saved, Hes DEAD');
-                } else
+                } else {
+                    req.session.user = req.body.email;
+                    req.session.signup.roleform = 'false';
                     console.log('User Safe and Sound in MONGO');
+                }
             });
             //res.json({ name: req.body.name });
             if (req.body.role === "student")
@@ -99,10 +102,12 @@ router.post('/student', (req, res, next) => {
         if (err) {
             console.log(err);
             console.error('Error saving student info');
-        } else
+        } else {
+            req.session.signup.roleform = true;
             console.log('Student Information Stored');
+        }
     });
-    res.redirect('/');
+    res.redirect('/profile');
 });
 //Teacher Form
 router.post('/teacher', (req, res, next) => {
@@ -140,10 +145,12 @@ router.post('/teacher', (req, res, next) => {
         if (err) {
             console.log(err);
             console.error('Error saving Teacher info');
-        } else
+        } else {
+            req.session.signup.roleform = true;
             console.log('Teacher Information Stored');
+        }
     });
-    res.redirect('/');
+    res.redirect('/profile');
 });
 router.post('/signin', (req, res, next) => {
     const email = req.body.email;
@@ -157,7 +164,7 @@ router.post('/signin', (req, res, next) => {
                 if (user.password === password) {
                     console.log('Successfully Logged in...');
                     req.session.user = user.email;
-                    res.redirect('/');
+                    res.redirect('/profile');
                 } else {
                     console.log('Password incorrect...');
                     res.redirect('/register');
