@@ -35,7 +35,7 @@
             </a>
           </li>
           {{#if user.student}}
-          <li>
+          <li class="active">
             <a href="/profile/recommendations">
               <i class="nc-icon nc-tile-56"></i>
               <p>Teachers List</p>
@@ -43,14 +43,14 @@
           </li>
           {{/if}}
           {{#if user.teacher}}
-          <li>
+          <li class="active">
             <a href="/profile/recommendations">
               <i class="nc-icon nc-tile-56"></i>
               <p>Students List</p>
             </a>
           </li>
           {{/if}}
-          <li class="active-pro active">
+          <li class="active-pro">
             <a href="/profile/upgrade">
               <i class="nc-icon nc-spaceship"></i>
               <p>Upgrade to PRO</p>
@@ -126,76 +126,73 @@
       <!-- End Navbar -->
       <div class="content">
         <div class="row">
-          <div class="col-md-8 ml-auto mr-auto">
-            <div class="card card-upgrade">
-              <div class="card-header text-center">
-                <h4 class="card-title">Paper Dashboard PRO</h3>
-                  <p class="card-category">Are you looking for more components? Please check our Premium Version of Paper Dashboard PRO.</p>
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                {{#if user.teacher}}
+                <h4 class="card-title">Recommended Students</h4>
+                {{/if}}
+                {{#if user.student}}
+                <h4 class="card-title">Recommended Teachers</h4>
+                {{/if}}
               </div>
               <div class="card-body">
-                <div class="table-responsive table-upgrade">
+                <div class="table-responsive">
                   <table class="table">
-                    <thead>
-                      <th></th>
-                      <th class="text-center">Free</th>
-                      <th class="text-center">PRO</th>
+                    <thead class=" text-primary">
+                      {{#if user.teacher}}
+                        <th>Name</th>
+                        <th>Degree</th>
+                        <th>Email</th>
+                        <th>Subjects</th>
+                        <th>Gender Preference</th>
+                        <th class="text-right">Required</th>
+                      {{/if}}
+                      {{#if user.student}}
+                        <th>Profile Headline</th>
+                        <th>Name</th>
+                        <th>Degree</th>
+                        <th>Email</th>
+                        <th>Contact No.</th>
+                        <th>Subjects</th>
+                        <th class="text-right">Expertise</th>
+                      {{/if}}
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>Components</td>
-                        <td class="text-center">16</td>
-                        <td class="text-center">160</td>
-                      </tr>
-                      <tr>
-                        <td>Plugins</td>
-                        <td class="text-center">4</td>
-                        <td class="text-center">13</td>
-                      </tr>
-                      <tr>
-                        <td>Example Pages</td>
-                        <td class="text-center">7</td>
-                        <td class="text-center">27</td>
-                      </tr>
-                      <tr>
-                        <td>Login, Register, Pricing, Lock Pages</td>
-                        <td class="text-center"><i class="nc-icon nc-simple-remove text-danger"></i></td>
-                        <td class="text-center"><i class="nc-icon nc-check-2 text-success"></i></td>
-                      </tr>
-                      <tr>
-                        <td>DataTables, VectorMap, SweetAlert, Wizard, jQueryValidation, FullCalendar etc...</td>
-                        <td class="text-center"><i class="nc-icon nc-simple-remove text-danger"></i></td>
-                        <td class="text-center"><i class="nc-icon nc-check-2 text-success"></i></td>
-                      </tr>
-                      <tr>
-                        <td>Mini Sidebar</td>
-                        <td class="text-center"><i class="nc-icon nc-simple-remove text-danger"></i></td>
-                        <td class="text-center"><i class="nc-icon nc-check-2 text-success"></i></td>
-                      </tr>
-                      <tr>
-                        <td>Premium Support</td>
-                        <td class="text-center"><i class="nc-icon nc-simple-remove text-danger"></i></td>
-                        <td class="text-center"><i class="nc-icon nc-check-2 text-success"></i></td>
-                      </tr>
-                      <tr>
-                        <td></td>
-                        <td class="text-center">Free</td>
-                        <td class="text-center">Just $39</td>
-                      </tr>
-                      <tr>
-                        <td class="text-center"></td>
-                        <td class="text-center">
-                          <a href="#" class="btn btn-round btn-default disabled">Current Version</a>
-                        </td>
-                        <td class="text-center">
-                          <a target="_blank" href="https://www.creative-tim.com/product/paper-dashboard-2-pro?ref=pd-free-upgrade-live" class="btn btn-round btn-primary">Upgrade to PRO</a>
-                        </td>
-                      </tr>
+                      {{#if recommendations}}
+                        {{#if user.teacher}}
+                          {{#each recommendations}}
+                            <tr>
+                              <td>{{name}}</td>
+                              <td>{{degree}}</td>
+                              <td>{{email}}</td>
+                              <td>{{subjects}}</td>
+                              <td>{{genderPreference}}</td>
+                              <td class="text-right">{{requirement}}</td>
+                            </tr>
+                          {{/each}}
+                        {{/if}}
+                        {{#if user.student}}
+                          {{#each recommendations}}
+                            <tr>
+                              <td>{{profileHeadline}}</td>
+                              <td>{{name}}</td>
+                              <td>{{highestQualName}}</td>
+                              <td>{{email}}</td>
+                              <td>{{phone}}</td>
+                              <td>{{subjects}}</td>
+                              <td class="text-right">{{expertise}}</td>
+                            </tr>
+                          {{/each}}
+                        {{/if}}
+                      {{/if}}
                     </tbody>
                   </table>
                 </div>
               </div>
             </div>
           </div>
+
         </div>
       </div>
       <footer class="footer footer-black  footer-white ">
@@ -212,7 +209,7 @@
               <span class="copyright">
                 © <script>
                   document.write(new Date().getFullYear())
-                </script>, made with <i class="fa fa-heart heart"></i> by Creative Tim
+                </script>, made with <i class="fa fa-heart heart"></i> For Sadeqa
               </span>
             </div>
           </div>

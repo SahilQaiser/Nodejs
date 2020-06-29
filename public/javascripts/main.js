@@ -24,6 +24,13 @@
         $('#signin').css('display', 'none');
         $('#signupForm').css('display', 'block');
     });
+    let dpCount = 2;
+    $('#displayPic').on('click', () => {
+        dpCount++;
+        dpCount = dpCount % 6;
+        $('#displayPic').attr('src', '/img/faces/' + dpCount + '.jpg');
+        $('#displayPicInput').attr('value', dpCount);
+    });
 
     // Smooth scroll for the navigation menu and links with .scrollto classes
     $(document).on('click', '.nav-menu a, .mobile-nav a, .scrollto', function(e) {

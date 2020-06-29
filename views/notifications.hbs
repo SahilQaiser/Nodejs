@@ -34,12 +34,22 @@
               <p>User Profile</p>
             </a>
           </li>
+          {{#if user.student}}
           <li>
-            <a href="/profile/tables">
+            <a href="/profile/recommendations">
               <i class="nc-icon nc-tile-56"></i>
-              <p>Table List</p>
+              <p>Teachers List</p>
             </a>
           </li>
+          {{/if}}
+          {{#if user.teacher}}
+          <li>
+            <a href="/profile/recommendations">
+              <i class="nc-icon nc-tile-56"></i>
+              <p>Students List</p>
+            </a>
+          </li>
+          {{/if}}
           <li class="active-pro">
             <a href="/profile/upgrade">
               <i class="nc-icon nc-spaceship"></i>
@@ -98,7 +108,7 @@
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                   <a class="dropdown-item" href="#">Action</a>
                   <a class="dropdown-item" href="#">Another action</a>
-                  <a class="dropdown-item" href="#"><form method="POST" action="/profile/signout"><input type="submit" value="logout"></a>
+                  <a class="dropdown-item" href="#"><form method="POST" action="/profile/signout"><input type="submit" value="logout"></form></a>
                 </div>
               </li>
               <li class="nav-item">

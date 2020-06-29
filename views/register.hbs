@@ -38,30 +38,30 @@
             <div class="col-md-8 mx-auto">
                 <form method="POST" action="/register/signup">
             <div class="form-group row">
-                    <label for="name" class="col-sm-2 col-form-label">Name</label>
+                    <label for="name" class="col-sm-2 col-form-label">Name *</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control-plaintext" name="name" placeholder="Name">
+                        <input type="text" class="form-control-plaintext" name="name" required placeholder="Name">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="email" class="col-sm-2 col-form-label">Email</label>
+                    <label for="email" class="col-sm-2 col-form-label">Email *</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control-plaintext" name="email" placeholder="email@example.com">
+                        <input type="text" class="form-control-plaintext" name="email" required placeholder="email@example.com">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="phone" class="col-sm-2 col-form-label">Phone Number</label>
+                    <label for="phone" class="col-sm-2 col-form-label">Phone Number *</label>
                     <div class="col-sm-10">
-                        <input type="number" class="form-control" name="phone" placeholder="Phone">
+                        <input type="number" class="form-control" name="phone" required placeholder="Phone">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
                     <div class="col-sm-5">
-                        <input type="password" class="form-control" name="password" placeholder="Password">
+                        <input type="password" class="form-control" required name="password" placeholder="Password">
                     </div>
                     <div class="col-sm-5">
-                        <input type="password" class="form-control" name="inputPassword2" placeholder="Confirm Password">
+                        <input type="password" class="form-control" required name="inputPassword2" placeholder="Confirm Password">
                     </div>
                 </div>
                 <div class="form-group row">
@@ -72,6 +72,11 @@
                         <option value="student">Student</option>
                     </select>
                     </div>
+                </div>
+                <input type="hidden" value="2" name="displayPic"/>
+                <div class="form-group row">
+                    <label for="about" class="col-sm-2 col-form-label">About Me:</label>
+                    <textarea name="about" class="form-control textarea"></textarea>
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-10 mx-auto">
@@ -115,15 +120,23 @@
                         </div>
                     </div>
                     <div class="form-group row">
+                        <lable for="subjects" class="col-sm-2 col-form-label">Subjects *</lable>
+                        <div class="col-sm-10">
+                            <select name="subjects" id="subjectSelect" class="selectpicker" multiple>
+                                <option value="mathematics">Mathematics</option>
+                                <option value="computer-science">Computer Science</option>
+                                <option value="physics">Physics</option>
+                                <option value="chemistry">Chemistry</option>
+                                <option value="persian">Persian</option>
+                            </select>
+                        </div>
+                    </div>
+                    <input type="hidden" name="name" value="{{name}}"/>
+                    <input type="hidden" name="email" value="{{email}}"/>
+                    <div class="form-group row">
                         <label for="requirement" class="col-sm-2 col-form-label">Details of your Requirement</label>
                         <div class="col-sm-10">
                         <input type="text" class="form-control" name="requirement" placeholder="Requirement Details">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="fee" class="col-sm-2 col-form-label">Fee Details (Please Mention whether you will give per hour or per month) *</label>
-                        <div class="col-sm-10">
-                        <input type="text" class="form-control" name="fee" required placeholder="Fee Details">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -143,7 +156,7 @@
                     <div class="form-group row">
                         <label for="profileHeadline" class="col-sm-2 col-form-label">Your profile Headline *</label>
                         <div class="col-sm-10">
-                        <input type="text" required class="form-control-plaintext" name="profileHeadline" placeholder="degree">
+                        <input type="text" required class="form-control-plaintext" name="profileHeadline" placeholder="Profile Headline">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -153,24 +166,33 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="subjects" class="col-sm-2 col-form-label">Subjects you can Teach *</label>
+                        <lable for="subjects" class="col-sm-2 col-form-label">Subjects *</lable>
                         <div class="col-sm-10">
-                        <input type="text" class="form-control" required name="subjects" placeholder="Enter subjects">
+                            <select name="subjects" id="subjectSelect" class="selectpicker" multiple>
+                                <option value="mathematics">Mathematics</option>
+                                <option value="computer-science">Computer Science</option>
+                                <option value="physics">Physics</option>
+                                <option value="chemistry">Chemistry</option>
+                                <option value="persian">Persian</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="expertise" class="col-sm-2 col-form-label">Level Of Expertise *</label>
                         <div class="col-sm-10">
-                        <select name="expertise" required>
-                            <option value="school16">School 1 to 6</option>
-                            <option value="school10">High School (Upto 10th)</option>
-                            <option value="school12">Senior Secondary School (Upto 12th)</option>
-                            <option value="jee-neet">JEE / NEET Level</option>
-                            <option value="graduation">Graduation Level</option>
-                            <option value="postgraduation">PostGraduation Level</option>
-                        </select>
+                            <select name="expertise" required>
+                                <option value="school16">School 1 to 6</option>
+                                <option value="school10">High School (Upto 10th)</option>
+                                <option value="school12">Senior Secondary School (Upto 12th)</option>
+                                <option value="jee-neet">JEE / NEET Level</option>
+                                <option value="graduation">Graduation Level</option>
+                                <option value="postgraduation">PostGraduation Level</option>
+                            </select>
                         </div>
                     </div>
+                    <input type="hidden" name="phone" value="{{phone}}"/>
+                    <input type="hidden" name="name" value="{{name}}"/>
+                    <input type="hidden" name="email" value="{{email}}"/>
                     <div class="form-group row">
                         <label for="highestQualName" class="col-sm-2 col-form-label">Details of your Highest Qualification *</label>
                         <div class="col-sm-10">
@@ -211,12 +233,6 @@
                         <label for="otherDetails" class="col-sm-2 col-form-label">Any Other Details</label>
                         <div class="col-sm-10">
                         <input type="text" class="form-control" name="otherDetails" placeholder="Other Details">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="fee" class="col-sm-2 col-form-label">Fee Details</label>
-                        <div class="col-sm-10">
-                        <input type="text" class="form-control" name="fee" placeholder="Fee">
                         </div>
                     </div>
                     <div class="form-group row">

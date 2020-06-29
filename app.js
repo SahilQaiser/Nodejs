@@ -3,8 +3,10 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var hbs = require('express-handlebars');
+var handlebars = require('handlebars');
 var logger = require('morgan');
 var cookieSession = require('cookie-session');
+const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
 
 
 var indexRouter = require('./routes/index');
@@ -15,6 +17,12 @@ var courseDetailsRouter = require('./routes/coursedetails');
 var registerRouter = require('./routes/register');
 var profileRouter = require('./routes/profile');
 var app = express();
+
+// handlebars.registerHelper('ifCmp', (valueOne, options) => {
+//     if (valueOne == options.hash.value)
+//         return options.fn(this);
+//     else return options.inverse(this);
+// })
 
 app.set('trust proxy', 1);
 app.use(cookieSession({
@@ -29,7 +37,8 @@ app.engine('hbs', hbs({
     extname: 'hbs',
     defaultView: 'layout',
     layoutsDir: __dirname + '/views/',
-    partialsDir: __dirname + '/views/partials'
+    partialsDir: __dirname + '/views/partials',
+    handlebars: allowInsecurePrototypeAccess(handlebars)
 }));
 
 app.use(logger('dev'));

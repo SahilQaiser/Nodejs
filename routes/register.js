@@ -1,37 +1,7 @@
 var express = require('express');
 var http = require('http');
 var router = express.Router();
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/mentor', { useNewUrlParser: true, useUnifiedTopology: true });
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection to MongoDB failed:'));
-db.once('open', function() {
-    console.log("Connected to MongoDB");
-});
-//User Schema
-var userSchema = new mongoose.Schema({ Name: 'string', email: 'string', password: 'string', phone: 'number', role: 'string' });
-var Users = mongoose.model('Users', userSchema);
-//Student Schema
-var studentSchema = new mongoose.Schema({ degree: 'string', school: 'string', fee: 'string', genderPreference: 'string', requirement: 'string' });
-var Students = mongoose.model('Students', studentSchema);
-//Teacher Schema
-var teacherSchema = new mongoose.Schema({
-    profileHeadline: 'string',
-    dob: 'string',
-    fee: 'string',
-    subjects: 'string',
-    expertise: 'string',
-    highestQualName: 'string',
-    highestQualMarks: 'string',
-    highestQualSchool: 'string',
-    otherQualName: 'string',
-    otherQualMarks: 'string',
-    otherQualSchool: 'string',
-    marks10: 'string',
-    marks12: 'string',
-    otherDetails: 'string'
-});
-var Teachers = mongoose.model('Teachers', teacherSchema);
+var [Users, Students, Teachers] = require('../models/db');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -59,27 +29,29 @@ router.post('/signup', (req, res, next) => {
             res.redirect('/');
         } else {
             var user = new Users({
-                Name: req.body.name,
+                name: req.body.name,
                 password: req.body.password,
                 email: req.body.email,
                 phone: req.body.phone,
-                role: req.body.role
+                displayPic: req.body.displayPic,
+                role: req.body.role,
+                about: req.body.about
             });
             user.save((err) => {
                 if (err) {
-                    console.log(err);
                     console.error('User cannot be Saved, Hes DEAD');
+                    console.log(err);
                 } else {
-                    req.session.user = req.body.email;
-                    req.session.signup.roleform = 'false';
+                    req.session.userEmail = req.body.email;
+                    req.session.signup.roleform = false;
                     console.log('User Safe and Sound in MONGO');
                 }
             });
             //res.json({ name: req.body.name });
             if (req.body.role === "student")
-                res.render('register', { student: 'true' });
+                res.render('register', { student: 'true', email: req.body.email });
             else if (req.body.role === "teacher")
-                res.render('register', { teacher: 'true' });
+                res.render('register', { teacher: 'true', email: req.body.email });
         }
     });
 });
@@ -87,22 +59,27 @@ router.post('/signup', (req, res, next) => {
 // Student form
 router.post('/student', (req, res, next) => {
     const degree = req.body.degree;
-    const fee = req.body.fee;
+    const name = req.body.name;
     const school = req.body.school;
     const genderPreference = req.body.genderPreference;
     const requirement = req.body.requirement;
+    const email = req.body.email;
+    const subjects = req.body.subjects;
     var student = new Students({
         degree: degree,
         school: school,
-        fee: fee,
+        subjects: subjects,
+        name: name,
         requirement: requirement,
-        genderPreference: genderPreference
+        genderPreference: genderPreference,
+        email: email
     });
     student.save((err) => {
         if (err) {
             console.log(err);
             console.error('Error saving student info');
         } else {
+            req.session.userEmail = req.body.email;
             req.session.signup.roleform = true;
             console.log('Student Information Stored');
         }
@@ -111,7 +88,7 @@ router.post('/student', (req, res, next) => {
 });
 //Teacher Form
 router.post('/teacher', (req, res, next) => {
-    const fee = req.body.fee;
+    const name = req.body.name;
     const profileHeadline = req.body.profileHeadline;
     const dob = req.body.dob;
     const subjects = req.body.subjects;
@@ -124,11 +101,13 @@ router.post('/teacher', (req, res, next) => {
     const otherQualSchool = req.body.otherQualSchool;
     const marks10 = req.body.marks10;
     const marks12 = req.body.marks12;
+    const email = req.body.email;
     const otherDetails = req.body.otherDetails;
     var teacher = new Teachers({
         profileHeadline: profileHeadline,
         dob: dob,
-        fee: fee,
+        email: email,
+        name: name,
         subjects: subjects,
         expertise: expertise,
         highestQualName: highestQualName,
@@ -146,6 +125,7 @@ router.post('/teacher', (req, res, next) => {
             console.log(err);
             console.error('Error saving Teacher info');
         } else {
+            req.session.userEmail = req.body.email;
             req.session.signup.roleform = true;
             console.log('Teacher Information Stored');
         }
@@ -155,21 +135,24 @@ router.post('/teacher', (req, res, next) => {
 router.post('/signin', (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
-    Users.find({ email: email }, (err, users) => {
+    Users.findOne({ email: email }, (err, user) => {
         if (err) {
             console.log("An error occured while fetching all users");
         } else {
-            users.forEach(user => {
-                console.log(user.email);
+            if (!user) {
+                console.log('User not found');
+                res.redirect('/register');
+            } else {
                 if (user.password === password) {
                     console.log('Successfully Logged in...');
-                    req.session.user = user.email;
+                    req.session.userEmail = user.email;
+                    req.session.userRole = user.role;
                     res.redirect('/profile');
                 } else {
                     console.log('Password incorrect...');
                     res.redirect('/register');
                 }
-            })
+            }
         }
     })
 });
