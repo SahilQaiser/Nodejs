@@ -32,4 +32,7 @@ var teacherSchema = new mongoose.Schema({
 });
 var Teachers = mongoose.model('Teachers', teacherSchema);
 
-module.exports = [Users, Students, Teachers];
+var messageSchema = new mongoose.Schema({from: String, to: String, message: String, created: Date});
+var Messages = mongoose.model('Messages',messageSchema);
+
+module.exports = [Users, Students, Teachers, Messages];

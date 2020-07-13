@@ -33,7 +33,11 @@ h6 {
     font-family: "Raleway", sans-serif;
 }
 
-
+.scroll {
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 50vh;
+}
 /*--------------------------------------------------------------
 # Back to top button
 --------------------------------------------------------------*/

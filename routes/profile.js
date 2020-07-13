@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var [Users, Students, Teachers] = require('../models/db');
+var [Users, Students, Teachers, Messages] = require('../models/db');
 
 function getUserDetails(req, res) {
     var [user, student, teacher] = require('../models/user');
@@ -91,6 +91,23 @@ function getTeacherList(req, subjects) {
         });
     });
 }
+
+async function getMessages(req, recipient)
+{
+    console.log("Msgslimit : "+req.session.limit);
+    var msgs = await Messages.find({$or: [{$and: [{from : req.session.userEmail },{to: recipient}]},{$and:[{to : req.session.userEmail },{from: recipient}]}]}).sort({created: 'desc'}).limit(req.session.limit);
+    var formattedMsgs = await formatMsgs(req, msgs);
+    return formattedMsgs;
+}
+async function formatMsgs(req, msgs)
+{
+    msgs.forEach(msg=>{
+        if(msg.to == req.session.userEmail)
+            msg.sent = true;
+        else msg.recieved = true;
+    });
+    return msgs.reverse();
+}
 /* GET home page. */
 router.get('/', function(req, res, next) {
     if (!req.session.userEmail) {
@@ -159,11 +176,51 @@ router.get('/user', function(req, res, next) {
     }
 });
 /* GET User Profile. */
-router.get('/notifications', function(req, res, next) {
+router.get('/chat', async function(req, res, next) {
     if (!req.session.userEmail)
         res.redirect('/');
     else
-        res.render('notifications', { user: req.session.curuser, layout: 'dashboard-layout' });
+    {
+        req.session.limit = req.session.limit ? req.session.limit : 10;
+        if (req.session.curuser.teacher) { getStudentList(req, req.session.curuser.teacher.subjects); } else { getTeacherList(req, req.session.curuser.student.subjects); }
+        var messages = await getMessages(req, req.session.recipient);
+        res.render('chat', { messages: messages, recipient: req.session.recipient, recommendations: req.session.recommendations, user: req.session.curuser, layout: 'dashboard-layout' });
+    }
+});
+/* Chat Recipient */
+router.post('/recipient', async function(req,res,next){
+    req.session.recipient = req.body.recipient;
+    res.redirect('/profile/chat');
+});
+/* loadMoreMessages */
+router.post('/loadMoreMessages', async function(req,res,next){
+    req.session.limit+=parseInt(req.body.limit);
+    res.redirect('/profile/chat');
+});
+/* POST chat messages */
+router.post('/chat', function(req,res,next){
+    if (!req.session.userEmail)
+        res.redirect('/');
+    else {
+        console.log('to '+req.body.to);
+        console.log('from '+req.body.from);
+        console.log('message '+req.body.message);
+        var msg = new Messages({
+            to : req.body.to,
+            from : req.body.from,
+            message: req.body.message,
+            created: new Date()
+        });
+        msg.save((err)=>{
+            if(err){
+                console.log('Something bad happened, cant chat..');
+            }
+            else {
+                console.log('msg sent...');
+                res.redirect('/profile/chat');
+            }
+        });
+    }
 });
 
 /* GET User Profile. */

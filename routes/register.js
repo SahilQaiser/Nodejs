@@ -82,9 +82,9 @@ router.post('/student', (req, res, next) => {
             req.session.userEmail = req.body.email;
             req.session.signup.roleform = true;
             console.log('Student Information Stored');
+            res.redirect('/profile');
         }
     });
-    res.redirect('/profile');
 });
 //Teacher Form
 router.post('/teacher', (req, res, next) => {
@@ -128,9 +128,9 @@ router.post('/teacher', (req, res, next) => {
             req.session.userEmail = req.body.email;
             req.session.signup.roleform = true;
             console.log('Teacher Information Stored');
+            res.redirect('/profile');
         }
     });
-    res.redirect('/profile');
 });
 router.post('/signin', (req, res, next) => {
     const email = req.body.email;
