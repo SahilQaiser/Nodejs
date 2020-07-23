@@ -1,23 +1,22 @@
 var express = require('express');
 var http = require('http');
 var router = express.Router();
-var [Users, Students, Teachers] = require('../models/db');
-
+var [Users, Students, Teachers, Notifications] = require('../models/db');
+var notification = false;
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    if (!req.session.user)
-        req.session.signup = true;
+    if (!req.session.user){
+        notificatiion = false;
+        req.session.signup = true; }
     else req.session.signup = false;
     res.render('register', {
         head: 'SignUp',
         signup: req.session.signup,
-        name: req.session.user
+        name: req.session.user,
+        menu: true,
+        notification: false
     });
 });
-
-// router.post('/api', (req, res, next) => {
-//     res.json('message:success');
-// })
 
 router.post('/signup', (req, res, next) => {
     Users.find({ email: req.body.email }, (err, users) => {
@@ -26,7 +25,14 @@ router.post('/signup', (req, res, next) => {
         }
         if (users.length > 0) {
             console.log('Email already registered');
-            res.redirect('/');
+            notification = 'Email Already Registered...';
+            res.render('register', {
+                head: 'SignUp',
+                signup: req.session.signup,
+                name: req.session.user,
+                menu: true,
+                notification: notification
+            });
         } else {
             var user = new Users({
                 name: req.body.name,
@@ -49,9 +55,14 @@ router.post('/signup', (req, res, next) => {
             });
             //res.json({ name: req.body.name });
             if (req.body.role === "student")
-                res.render('register', { student: 'true', email: req.body.email });
+                res.render('register', { student: 'true', email: req.body.email, name: req.body.name });
             else if (req.body.role === "teacher")
-                res.render('register', { teacher: 'true', email: req.body.email });
+                res.render('register', { teacher: 'true', email: req.body.email, name: req.body.name, phone: req.body.phone });
+            else if (req.body.role === "admin")
+                {
+                    req.session.userEmail = req.body.email;
+                    res.redirect('/profile');
+                }
         }
     });
 });
@@ -78,13 +89,25 @@ router.post('/student', (req, res, next) => {
         if (err) {
             console.log(err);
             console.error('Error saving student info');
+            res.redirect('/register');
         } else {
             req.session.userEmail = req.body.email;
             req.session.signup.roleform = true;
+            req.session.firstTime = true;
             console.log('Student Information Stored');
+            var notification = new Notifications({
+                email : req.body.email,
+                content : 'You have registered Successfully',
+                read : false,
+                created: new Date(),
+                link : '/profile'
+            });
+            notification.save((err)=>{
+                if(err){console.log(err + ' : Errror')};
+            });
+            res.redirect('/profile');
         }
     });
-    res.redirect('/profile');
 });
 //Teacher Form
 router.post('/teacher', (req, res, next) => {
@@ -102,12 +125,14 @@ router.post('/teacher', (req, res, next) => {
     const marks10 = req.body.marks10;
     const marks12 = req.body.marks12;
     const email = req.body.email;
+    const phone = req.body.phone;
     const otherDetails = req.body.otherDetails;
     var teacher = new Teachers({
         profileHeadline: profileHeadline,
         dob: dob,
         email: email,
         name: name,
+        phone: phone,
         subjects: subjects,
         expertise: expertise,
         highestQualName: highestQualName,
@@ -124,13 +149,15 @@ router.post('/teacher', (req, res, next) => {
         if (err) {
             console.log(err);
             console.error('Error saving Teacher info');
+            res.redirect('/register');
         } else {
             req.session.userEmail = req.body.email;
             req.session.signup.roleform = true;
+            req.session.firstTime = true;
             console.log('Teacher Information Stored');
+            res.redirect('/profile');
         }
     });
-    res.redirect('/profile');
 });
 router.post('/signin', (req, res, next) => {
     const email = req.body.email;
@@ -141,16 +168,39 @@ router.post('/signin', (req, res, next) => {
         } else {
             if (!user) {
                 console.log('User not found');
-                res.redirect('/register');
+                notification= 'Email Not Found...';
+                res.render('register', {
+                    head: 'SignUp',
+                    signup: req.session.signup,
+                    menu: true,
+                    notification: notification
+                });
             } else {
                 if (user.password === password) {
                     console.log('Successfully Logged in...');
                     req.session.userEmail = user.email;
                     req.session.userRole = user.role;
+                    req.session.firstTime = true;
+                    var notification = new Notifications({
+                        email : req.body.email,
+                        content : 'Successfully Logged in...',
+                        read : false,
+                        created: new Date(),
+                        link : '/profile'
+                    });
+                    notification.save((err)=>{
+                        if(err){console.log(err + ' : Errror')};
+                    });
                     res.redirect('/profile');
                 } else {
                     console.log('Password incorrect...');
-                    res.redirect('/register');
+                    notification = 'Invalid Password...';
+                    res.render('register', {
+                        head: 'SignUp',
+                        signup: req.session.signup,
+                        menu: true,
+                        notification: notification
+                    });
                 }
             }
         }

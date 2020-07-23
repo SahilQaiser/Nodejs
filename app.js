@@ -11,9 +11,9 @@ const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-ac
 
 var indexRouter = require('./routes/index');
 var aboutRouter = require('./routes/about');
-var coursesRouter = require('./routes/courses');
+var instructionsRouter = require('./routes/instructions');
 var contactRouter = require('./routes/contact');
-var courseDetailsRouter = require('./routes/coursedetails');
+var rulesRouter = require('./routes/rules');
 var registerRouter = require('./routes/register');
 var profileRouter = require('./routes/profile');
 var app = express();
@@ -49,9 +49,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/about', aboutRouter);
-app.use('/courses', coursesRouter);
+app.use('/instructions', instructionsRouter);
 app.use('/contact', contactRouter);
-app.use('/course-details', courseDetailsRouter);
+app.use('/rules', rulesRouter);
 app.use('/register', registerRouter);
 app.use('/profile', profileRouter);
 

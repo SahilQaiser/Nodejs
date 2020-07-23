@@ -1,363 +1,156 @@
-<div class="wrapper ">
-        <div class="sidebar" data-color="white" data-active-color="danger">
-            <div class="logo">
-                <a href="https://www.creative-tim.com" class="simple-text logo-mini">
-                    <div class="logo-image-small">
-                        <img src="/img/logo-small.png">
+<div class="wrapper pt-4">
+    <div class="content pt-5">
+        <div class="row mx-0">
+            <div class="col-md-4">
+                <div class="card card-user">
+                    <div class="image">
+                        <img src="/img/damir-bosnjak.jpg" alt="...">
                     </div>
-                    <!-- <p>CT</p> -->
-                </a>
-                <a href="https://www.creative-tim.com" class="simple-text logo-normal">
-          {{user.name}}
-          <!-- <div class="logo-image-big">
-            <img src="/img/logo-big.png">
-          </div> -->
-        </a>
-            </div>
-            <div class="sidebar-wrapper">
-        <ul class="nav">
-          <li>
-            <a href="/profile">
-              <i class="nc-icon nc-bank"></i>
-              <p>Dashboard</p>
-            </a>
-          </li>
-          <li>
-            <a href="/profile/notifications">
-              <i class="nc-icon nc-bell-55"></i>
-              <p>Notifications</p>
-            </a>
-          </li>
-          <li class="active ">
-            <a href="/profile/user">
-              <i class="nc-icon nc-single-02"></i>
-              <p>User Profile</p>
-            </a>
-          </li>
-          {{#if user.student}}
-          <li>
-            <a href="/profile/recommendations">
-              <i class="nc-icon nc-tile-56"></i>
-              <p>Teachers List</p>
-            </a>
-          </li>
-          {{/if}}
-          {{#if user.teacher}}
-          <li>
-            <a href="/profile/recommendations">
-              <i class="nc-icon nc-tile-56"></i>
-              <p>Students List</p>
-            </a>
-          </li>
-          {{/if}}
-          <li class="active-pro">
-            <a href="/profile/upgrade">
-              <i class="nc-icon nc-spaceship"></i>
-              <p>Upgrade to PRO</p>
-            </a>
-          </li>
-        </ul>
-      </div>
-        </div>
-        <div class="main-panel">
-            <!-- Navbar -->
-            <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
-                <div class="container-fluid">
-                    <div class="navbar-wrapper">
-                        <div class="navbar-toggle">
-                            <button type="button" class="navbar-toggler">
-                <span class="navbar-toggler-bar bar1"></span>
-                <span class="navbar-toggler-bar bar2"></span>
-                <span class="navbar-toggler-bar bar3"></span>
-              </button>
+                    <div class="card-body">
+                        <div class="author">
+                            <a href="#">
+                                <img id="displayPic" class="avatar border-gray" src="/img/faces/{{user.displayPic}}.jpg" alt="...">
+                                <h5 class="title">{{user.name}}</h5>
+                            </a>
+                            <p class="description">
+                                @{{user.userRole}}
+                            </p>
                         </div>
-                        <a class="navbar-brand" href="javascript:;">Paper Dashboard 2</a>
+                        <p class="description text-center">
+                            "I like the way you work it <br> No diggity <br> I wanna bag it up"
+                        </p>
                     </div>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-          </button>
-                    <div class="collapse navbar-collapse justify-content-end" id="navigation">
-                        <!-- Search Form on Dashboard
-                        <form>
-                            <div class="input-group no-border">
-                                <input type="text" value="" class="form-control" placeholder="Search...">
-                                <div class="input-group-append">
-                                    <div class="input-group-text">
-                                        <i class="nc-icon nc-zoom-split"></i>
+                    <div class="card-footer">
+                        <hr>
+                        <div class="button-container">
+                            <div class="row">
+                                {{#if user.student}}
+                                    <div class="col-lg-7 col-md-12 col-12 ml-auto">
+                                        <h5>Subjects<br>
+                                        {{#each user.student.subjects}}
+                                            <small>{{this}}</small><br>
+                                        {{/each}}
+                                        </h5>
+                                    </div>
+                                {{/if}}
+                                {{#if user.teacher}}
+                                    <div class="col-lg-7 col-md-12 col-12 ml-auto">
+                                        <h5>Subjects<br>
+                                        {{#each user.teacher.subjects}}
+                                            <small>{{this}}</small><br>
+                                        {{/each}}
+                                        </h5>
+                                    </div>
+                                {{/if}}
+                                <div class="col-lg-3 mr-auto">
+                                    <h5>Free<br><small>Field</small></h5>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card card-user">
+                    <div class="card-header">
+                        <h5 class="card-title">Edit Profile</h5>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" action="/profile/update">
+                            <div class="row">
+                                <div class="col-md-6 pr-1">
+                                    <div class="form-group">
+                                        <label>User Name</label>
+                                        <input type="text" class="form-control" name="name" placeholder="User Name" value="{{user.name}}">
+                                    </div>
+                                </div>
+                                <input type="hidden" id="displayPicInput" name="displayPic" value="{{user.displayPic}}"/>
+                                <div class="col-md-6 pl-1">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Email address</label>
+                                        <input type="email" class="form-control" disabled placeholder="{{user.email}}">
                                     </div>
                                 </div>
                             </div>
-                        </form> -->
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link btn-magnify" href="javascript:;">
-                                    <i class="nc-icon nc-layout-11"></i>
-                                    <p>
-                                        <span class="d-lg-none d-md-block">Stats</span>
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item btn-rotate dropdown">
-                                <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="nc-icon nc-bell-55"></i>
-                                    <p>
-                                        <span class="d-lg-none d-md-block">Some Actions</span>
-                                    </p>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">
-                                        <form method="POST" action="/profile/signout"><input type="submit" value="logout"></form></a>
-                                </div>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link btn-rotate" href="javascript:;">
-                                    <i class="nc-icon nc-settings-gear-65"></i>
-                                    <p>
-                                        <span class="d-lg-none d-md-block">Account</span>
-                                    </p>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-            <!-- End Navbar -->
-            <div class="content">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="card card-user">
-                            <div class="image">
-                                <img src="/img/damir-bosnjak.jpg" alt="...">
-                            </div>
-                            <div class="card-body">
-                                <div class="author">
-                                    <a href="#">
-                                        <img id="displayPic" class="avatar border-gray" src="/img/faces/{{user.displayPic}}.jpg" alt="...">
-                                        <h5 class="title">{{user.name}}</h5>
-                                    </a>
-                                    <p class="description">
-                                        @{{user.userRole}}
-                                    </p>
-                                </div>
-                                <p class="description text-center">
-                                    "I like the way you work it <br> No diggity <br> I wanna bag it up"
-                                </p>
-                            </div>
-                            <div class="card-footer">
-                                <hr>
-                                <div class="button-container">
-                                    <div class="row">
+                            <div class="row">
+                                <div class="col-md-6 pr-1">
+                                    <div class="form-group">
+                                        <label>Degree</label>
                                         {{#if user.student}}
-                                            <div class="col-lg-7 col-md-12 col-12 ml-auto">
-                                                <h5>Subjects<br>
-                                                {{#each user.student.subjects}}
-                                                    <small>{{this}}</small><br>
-                                                {{/each}}
-                                                </h5>
-                                            </div>
+                                            <input type="text" class="form-control" name="degree" placeholder="Degree" value="{{user.student.degree}}">
                                         {{/if}}
                                         {{#if user.teacher}}
-                                            <div class="col-lg-7 col-md-12 col-12 ml-auto">
-                                                <h5>Subjects<br>
-                                                {{#each user.teacher.subjects}}
-                                                    <small>{{this}}</small><br>
-                                                {{/each}}
-                                                </h5>
-                                            </div>
+                                            <input type="text" class="form-control" name="highestQualName" placeholder="Degree" value="{{user.teacher.highestQualName}}">
                                         {{/if}}
-                                        <div class="col-lg-3 mr-auto">
-                                            <h5>Free<br><small>Field</small></h5>
-                                        </div>
-                                        
+                                    </div>
+                                </div>
+                                <div class="col-md-6 pl-1">
+                                    <div class="form-group">
+                                        <label>School / University</label>
+                                        {{#if user.student}}
+                                            <input type="text" class="form-control" name="school" placeholder="School/University" value="{{user.student.school}}">
+                                        {{/if}}
+                                        {{#if user.teacher}}
+                                            <input type="text" class="form-control" name="highestQualSchool" placeholder="School/University" value="{{user.teacher.highestQualSchool}}">
+                                        {{/if}}
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">Team Members</h4>
+                            {{#if user.student}}
+                            <div class="row pt-3 pb-2">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Gender Preferences (Teacher)</label>
+                                        <select name="genderPreference" required>
+                                            <option value="male">Male</option>
+                                            <option selected value="female">Female</option>
+                                            <option value="both">Male/Female</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="card-body">
-                                <ul class="list-unstyled team-members">
-                                    <li>
-                                        <div class="row">
-                                            <div class="col-md-2 col-2">
-                                                <div class="avatar">
-                                                    <img src="/img/faces/0.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-7 col-7">
-                                                DJ Khaled
-                                                <br />
-                                                <span class="text-muted"><small>Offline</small></span>
-                                            </div>
-                                            <div class="col-md-3 col-3 text-right">
-                                                <btn class="btn btn-sm btn-outline-success btn-round btn-icon"><i class="fa fa-envelope"></i></btn>
-                                            </div>
+                            {{/if}}
+                            {{#if user.teacher}}
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Level Of Expertise</label>
+                                            <input type="text" class="form-control" placeholder="Level Of Expertise" value="{{user.expertise}}">
                                         </div>
-                                    </li>
-                                    <li>
-                                        <div class="row">
-                                            <div class="col-md-2 col-2">
-                                                <div class="avatar">
-                                                    <img src="/img/faces/1.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-7 col-7">
-                                                Creative Tim
-                                                <br />
-                                                <span class="text-success"><small>Available</small></span>
-                                            </div>
-                                            <div class="col-md-3 col-3 text-right">
-                                                <btn class="btn btn-sm btn-outline-success btn-round btn-icon"><i class="fa fa-envelope"></i></btn>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="row">
-                                            <div class="col-md-2 col-2">
-                                                <div class="avatar">
-                                                    <img src="/img/faces/4.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">
-                                                </div>
-                                            </div>
-                                            <div class="col-ms-7 col-7">
-                                                Flume
-                                                <br />
-                                                <span class="text-danger"><small>Busy</small></span>
-                                            </div>
-                                            <div class="col-md-3 col-3 text-right">
-                                                <btn class="btn btn-sm btn-outline-success btn-round btn-icon"><i class="fa fa-envelope"></i></btn>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
+                                    </div>
+                                </div>
+                            {{/if}}
+                            {{#if user.student}}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Requirement</label>
+                                        <textarea name="requirement" class="form-control textarea">{{user.student.requirement}}</textarea>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card card-user">
-                            <div class="card-header">
-                                <h5 class="card-title">Edit Profile</h5>
+                            {{/if}}
+                            {{#if user.teacher}}
+                                <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Profile Headline</label>
+                                        <textarea name="profileHeadline" class="form-control textarea">{{user.teacher.profileHeadline}}</textarea>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="card-body">
-                                <form method="POST" action="/profile/update">
-                                    <div class="row">
-                                        <div class="col-md-6 pr-1">
-                                            <div class="form-group">
-                                                <label>User Name</label>
-                                                <input type="text" class="form-control" name="name" placeholder="User Name" value="{{user.name}}">
-                                            </div>
-                                        </div>
-                                        <input type="hidden" id="displayPicInput" name="displayPic" value="{{user.displayPic}}"/>
-                                        <div class="col-md-6 pl-1">
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Email address</label>
-                                                <input type="email" class="form-control" disabled placeholder="{{user.email}}">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6 pr-1">
-                                            <div class="form-group">
-                                                <label>Degree</label>
-                                                {{#if user.student}}
-                                                    <input type="text" class="form-control" name="degree" placeholder="Degree" value="{{user.student.degree}}">
-                                                {{/if}}
-                                                {{#if user.teacher}}
-                                                    <input type="text" class="form-control" name="highestQualName" placeholder="Degree" value="{{user.teacher.highestQualName}}">
-                                                {{/if}}
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 pl-1">
-                                            <div class="form-group">
-                                                <label>School / University</label>
-                                                {{#if user.student}}
-                                                    <input type="text" class="form-control" name="school" placeholder="School/University" value="{{user.student.school}}">
-                                                {{/if}}
-                                                {{#if user.teacher}}
-                                                    <input type="text" class="form-control" name="highestQualSchool" placeholder="School/University" value="{{user.teacher.highestQualSchool}}">
-                                                {{/if}}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {{#if user.student}}
-                                    <div class="row pt-3 pb-2">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label>Gender Preferences (Teacher)</label>
-                                                <select name="genderPreference" required>
-                                                    <option value="male">Male</option>
-                                                    <option selected value="female">Female</option>
-                                                    <option value="both">Male/Female</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {{/if}}
-                                    {{#if user.teacher}}
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label>Level Of Expertise</label>
-                                                    <input type="text" class="form-control" placeholder="Level Of Expertise" value="{{user.expertise}}">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    {{/if}}
-                                    {{#if user.student}}
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label>Requirement</label>
-                                                <textarea name="requirement" class="form-control textarea">{{user.student.requirement}}</textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {{/if}}
-                                    {{#if user.teacher}}
-                                        <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label>Profile Headline</label>
-                                                <textarea name="profileHeadline" class="form-control textarea">{{user.teacher.profileHeadline}}</textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {{/if}}
-                                    <div class="row">
-                                        <div class="update ml-auto mr-auto">
-                                            <input type="submit" class="btn btn-primary btn-round" value="Update Profile"/>
-                                        </div>
-                                    </div>
-                                </form>
+                            {{/if}}
+                            <div class="row">
+                                <div class="update ml-auto mr-auto">
+                                    <input type="submit" class="btn btn-primary btn-round" onclick="demo.showNotifications('bottom','left','Proifle updated Successfully...')" value="Update Profile"/>
+                                </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
-            <footer class="footer footer-black  footer-white ">
-                <div class="container-fluid">
-                    <div class="row">
-                        <nav class="footer-nav">
-                            <ul>
-                                <li><a href="https://www.creative-tim.com" target="_blank">Creative Tim</a></li>
-                                <li><a href="https://www.creative-tim.com/blog" target="_blank">Blog</a></li>
-                                <li><a href="https://www.creative-tim.com/license" target="_blank">Licenses</a></li>
-                            </ul>
-                        </nav>
-                        <div class="credits ml-auto">
-                            <span class="copyright">
-                © <script>
-                  document.write(new Date().getFullYear())
-                </script>, made with <i class="fa fa-heart heart"></i> by Creative Tim
-              </span>
-                        </div>
-                    </div>
-                </div>
-            </footer>
         </div>
     </div>
+    {{>footer-dashboard}}
+</div>

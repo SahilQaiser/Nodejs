@@ -1,0 +1,121 @@
+<div class="wrapper pt-4">
+      <div class="content pt-5">
+        <!-- Students List -->
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title">Students</h4>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead class=" text-primary">
+                        <th>Name</th>
+                        <th>Degree</th>
+                        <th>Email</th>
+                        <th>Subjects</th>
+                        <th>Gender Preference</th>
+                        <th class="text-right">Required</th>
+                    </thead>
+                    <tbody>
+                      {{#if user.admin}}
+                        {{#each students}}
+                          <tr>
+                            <td>{{name}}</td>
+                            <td>{{degree}}</td>
+                            <td>{{email}}</td>
+                            <td>{{subjects}}</td>
+                            <td>{{genderPreference}}</td>
+                            <td class="text-right">{{requirement}}</td>
+                          </tr>
+                        {{/each}}
+                      {{/if}}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- Teachers List -->
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title">Teachers</h4>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead class=" text-primary">
+                        <th>Profile Headline</th>
+                        <th>Name</th>
+                        <th>Degree</th>
+                        <th>Email</th>
+                        <th>Contact No.</th>
+                        <th>Subjects</th>
+                        <th class="text-right">Expertise</th>
+                    </thead>
+                    <tbody>
+                      {{#if user.admin}}
+                        {{#each teachers}}
+                          <tr>
+                              <td>{{profileHeadline}}</td>
+                              <td>{{name}}</td>
+                              <td>{{highestQualName}}</td>
+                              <td>{{email}}</td>
+                              <td>{{phone}}</td>
+                              <td>{{subjects}}</td>
+                              <td class="text-right">{{expertise}}</td>
+                            </tr>
+                        {{/each}}
+                      {{/if}}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- Teachers List -->
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title">Feedbacks</h4>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead class=" text-primary">
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Topic</th>
+                        <th class="text-right">Message</th>
+                    </thead>
+                    <tbody>
+                      {{#if user.admin}}
+                        {{#each feedbacks}}
+                          <tr>
+                              <td>{{name}}</td>
+                              <td>{{email}}</td>
+                              <td>{{topic}}</td>
+                              <td class="text-right">{{message}}</td>
+                            </tr>
+                        {{/each}}
+                      {{/if}}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      {{>footer-dashboard}}
+    </div>
+  </div>

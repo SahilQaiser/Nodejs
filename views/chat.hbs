@@ -1,0 +1,165 @@
+<div class="wrapper pt-4">
+      <div class="content pt-5">
+        <div class="row mx-0">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <h5 class="card-title">Messages</h5>
+                <p class="card-category">Kindly read the rules before contacting anybody from this website. Find the <a href="/rules" target="_blank">Rules here</a></p>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="card card-plain">
+                      <div class="card-header">
+                        <h4 class="card-title text-center">Recommended {{#if user.student}}Teachers{{/if}}{{#if user.teacher}}Students{{/if}}</h4>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled team-members">
+                          {{#each recommendation}}
+                            <li>
+                                <div class="row">
+                                    <div class="col-md-2 col-2 text-right">
+
+                                    </div>
+                                    <div class="col-md-2 col-2 text-right">
+                                        <div class="avatar">
+                                            <img src="/img/faces/0.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-4 text-left">
+                                        {{email}}
+                                        <br />
+                                        <span class="text-muted"><small>Offline</small></span>
+                                    </div>
+                                    <div class="col-md-2 col-2 text-left">
+                                      <form action="/profile/recipient" method="POST">
+                                        <input type="hidden" name="recipient" value="{{email}}"/>
+                                        <input type="hidden" name="name" value="{{name}}"/>
+                                        <button class="btn btn-sm btn-outline-success btn-round btn-icon" type="submit">
+                                          <i class="fa fa-envelope"></i>
+                                        </button>
+                                      </form>
+                                    </div>
+                                    <div class="col-md-2 col-2 text-right">
+
+                                    </div>
+                                </div>
+                            </li>
+                            <hr>
+                            {{/each}}
+                        </ul>
+                    </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6" onload="messageBoxScroll()">
+                    <div class="card card-plain">
+                      <div class="card-header">
+                        <h5 class="card-title">Messages</h5>
+                      </div>
+                      <div class="card-body scroll" id="scroll-container">
+                        <!-- LOAD MORE -->
+                        {{!-- <div class="alert alert-info">
+                            <form action="/profile/loadMoreMessages" method="POST">
+                              <input type="hidden" value="5" name="limit"/>
+                              <button class="btn btn-info w-100" type="submit"><span>Load More Messages</span></button>
+                            </form>
+                          </div> --}}
+                        {{#each messages}}
+                             {{#if sent}}
+                             <div class="alert text-right alert-info">
+                                <span>{{message}} - <b>'{{senderName}}'</b></span>
+                            </div>
+                            {{else}}
+                            <div class="alert text-left alert-success">
+                                <span><b>'{{senderName}}'</b> - {{message}}</span>
+                            </div>
+                            {{/if}}
+                        {{/each}}
+                        <div class="alert alert-success" id="messageBox">
+                          <form method="POST" action="/profile/chat">
+                            From : <input type="text" class="w-100 text-right" name="from" readonly="readonly" value="{{user.email}}"/>
+                            To: <input type="text" name="to" class="w-100 text-right" readonly="readonly" value="{{recipient}}"/>
+                            <textarea class="w-100 text-right mt-3" name="message" placeholder="Message"></textarea>
+                            <input type="submit" class="btn btn-success float-right mt-4" value="send"/>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mx-0">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="places-buttons">
+                  <div class="row">
+                    <div class="col-md-6 ml-auto mr-auto text-center">
+                      <h4 class="card-title">
+                        Notifications Places
+                        <p class="category">Click to view notifications</p>
+                      </h4>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-8 ml-auto mr-auto">
+                      <div class="row">
+                        <div class="col-md-4">
+                          <button class="btn btn-primary btn-block" onclick="demo.showNotification('top','left')">Top Left</button>
+                        </div>
+                        <div class="col-md-4">
+                          <button class="btn btn-primary btn-block" onclick="demo.showNotification('top','center')">Top Center</button>
+                        </div>
+                        <div class="col-md-4">
+                          <button class="btn btn-primary btn-block" onclick="demo.showNotification('top','right')">Top Right</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-8 ml-auto mr-auto">
+                      <div class="row">
+                        <div class="col-md-4">
+                          <button class="btn btn-primary btn-block" onclick="demo.showNotification('bottom','left')">Bottom Left</button>
+                        </div>
+                        <div class="col-md-4">
+                          <button class="btn btn-primary btn-block" onclick="demo.showNotification('bottom','center')">Bottom Center</button>
+                        </div>
+                        <div class="col-md-4">
+                          <button class="btn btn-primary btn-block" onclick="demo.showNotification('bottom','right')">Bottom Right</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer class="footer footer-black  footer-white ">
+        <div class="container-fluid">
+          <div class="row">
+            <nav class="footer-nav">
+              <ul>
+                <li><a href="https://www.creative-tim.com" target="_blank">Creative Tim</a></li>
+                <li><a href="https://www.creative-tim.com/blog" target="_blank">Blog</a></li>
+                <li><a href="https://www.creative-tim.com/license" target="_blank">Licenses</a></li>
+              </ul>
+            </nav>
+            <div class="credits ml-auto">
+              <span class="copyright">
+                © <script>
+                  document.write(new Date().getFullYear())
+                </script>, made with <i class="fa fa-heart heart"></i> by Creative Tim
+              </span>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
