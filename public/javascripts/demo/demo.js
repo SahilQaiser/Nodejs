@@ -22,7 +22,7 @@ demo = {
       type: 'line',
 
       data: {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"],
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug18", "Sep", "Oct"],
         datasets: [{
             borderColor: "#6bd098",
             backgroundColor: "#6bd098",
@@ -103,7 +103,7 @@ demo = {
       type: 'line',
 
       data: {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"],
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug18", "Sep", "Oct"],
         datasets: [{
             borderColor: "#6bd098",
             backgroundColor: "#6bd098",
@@ -386,6 +386,23 @@ demo = {
 
     // To add the marker to the map, call setMap();
     marker.setMap(map);
+  },
+
+  showNotifications: function(from, align, msg) {
+    color = 'primary';
+
+    $.notify({
+      icon: "nc-icon nc-bell-55",
+      message: msg
+
+    }, {
+      type: color,
+      timer: 8000,
+      placement: {
+        from: from,
+        align: align
+      }
+    });
   },
 
   showNotification: function(from, align) {

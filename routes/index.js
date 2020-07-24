@@ -6,7 +6,7 @@ router.get('/', function(req, res, next) {
     if (req.session.userEmail) {
         res.redirect('/profile');
     } else
-        res.render('index', { websiteName: 'Educational-Website' });
+        res.render('index', { websiteName: 'Educational-Website', home:true });
 });
 
 

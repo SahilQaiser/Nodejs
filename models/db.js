@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/mentor', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://localhost/mentor', { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify:true });
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection to MongoDB failed:'));
 db.once('open', function() {
@@ -31,8 +31,21 @@ var teacherSchema = new mongoose.Schema({
     otherDetails: 'string'
 });
 var Teachers = mongoose.model('Teachers', teacherSchema);
+<<<<<<< HEAD
 
 var messageSchema = new mongoose.Schema({from: String, to: String, message: String, created: Date});
 var Messages = mongoose.model('Messages',messageSchema);
 
 module.exports = [Users, Students, Teachers, Messages];
+=======
+//Feedback Schema
+var fbSchema = new mongoose.Schema({ name: 'string', email: 'string', topic: 'string', message: 'string'});
+var Feedback = mongoose.model('Feedback', fbSchema);
+//Messages Schema
+var messageSchema = new mongoose.Schema({to: String, from:String, message: String, created: Date});
+var Messages = mongoose.model('Messages',messageSchema);
+//Notifications Schema
+var notificationSchema = new mongoose.Schema({email: String, content: String, read: Boolean, link: String, created: Date});
+var Notifications = mongoose.model('Notifications',notificationSchema);
+module.exports = [Users, Students, Teachers, Feedback, Messages, Notifications];
+>>>>>>> 5f4bfc50b960b0b978896ec6f1ae0b27e4020f40

@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+<<<<<<<< HEAD:views/chat.hbs
 <div class="wrapper ">
     <div class="sidebar" data-color="white" data-active-color="danger">
       <div class="logo">
@@ -131,12 +133,23 @@
               <div class="card-header">
                 <h5 class="card-title">Chat</h5>
                 <p class="card-category">Kindly be friendly, mind your language . Please read all the <a href="#" target="_blank">Rules</a></p>
+=======
+<div class="wrapper pt-4">
+      <div class="content pt-5">
+        <div class="row mx-0">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <h5 class="card-title">Messages</h5>
+                <p class="card-category">Kindly read the rules before contacting anybody from this website. Find the <a href="/rules" target="_blank">Rules here</a></p>
+>>>>>>> 5f4bfc50b960b0b978896ec6f1ae0b27e4020f40
               </div>
               <div class="card-body">
                 <div class="row">
                   <div class="col-md-6">
                     <div class="card card-plain">
                       <div class="card-header">
+<<<<<<< HEAD
                         <h5 class="card-title">{{#if user.student}}Recommended Teachers {{/if}}{{#if user.teacher}}Recommended Students {{/if}}List</h5>
                       </div>
                       {{#each recommendations}}
@@ -153,11 +166,55 @@
                   </div>
                   {{!-- Chat Window --}}
                   <div class="col-md-6">
+=======
+                        <h4 class="card-title text-center">Recommended {{#if user.student}}Teachers{{/if}}{{#if user.teacher}}Students{{/if}}</h4>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled team-members">
+                          {{#each recommendation}}
+                            <li>
+                                <div class="row">
+                                    <div class="col-md-2 col-2 text-right">
+
+                                    </div>
+                                    <div class="col-md-2 col-2 text-right">
+                                        <div class="avatar">
+                                            <img src="/img/faces/0.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-4 text-left">
+                                        {{email}}
+                                        <br />
+                                        <span class="text-muted"><small>Offline</small></span>
+                                    </div>
+                                    <div class="col-md-2 col-2 text-left">
+                                      <form action="/profile/recipient" method="POST">
+                                        <input type="hidden" name="recipient" value="{{email}}"/>
+                                        <input type="hidden" name="name" value="{{name}}"/>
+                                        <button class="btn btn-sm btn-outline-success btn-round btn-icon" type="submit">
+                                          <i class="fa fa-envelope"></i>
+                                        </button>
+                                      </form>
+                                    </div>
+                                    <div class="col-md-2 col-2 text-right">
+
+                                    </div>
+                                </div>
+                            </li>
+                            <hr>
+                            {{/each}}
+                        </ul>
+                    </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6" onload="messageBoxScroll()">
+>>>>>>> 5f4bfc50b960b0b978896ec6f1ae0b27e4020f40
                     <div class="card card-plain">
                       <div class="card-header">
                         <h5 class="card-title">Messages</h5>
                       </div>
                       <div class="card-body scroll" id="scroll-container">
+<<<<<<< HEAD
                         <div class="alert alert-info">
                             <form action="/profile/loadMoreMessages" method="POST">
                               <input type="hidden" value="10" name="limit"/>
@@ -183,6 +240,73 @@
                           </form>
                         </div>
                       </div>
+========
+<div class="wrapper pt-4">
+    <div class="card-body pt-4">
+        <ul class="list-unstyled team-members pt-4">
+            {{#each notifications}}
+            <li>
+                <div class="row">
+                    <div class="col-md-2 col-2 text-right">
+
+                    </div>
+
+                    <div class="col-md-4 col-4 text-left text-dark">
+                        <a href="{{link}}"><p class="h5 text-dark">{{content}}</p></a>
+>>>>>>>> 5f4bfc50b960b0b978896ec6f1ae0b27e4020f40:views/notifications.hbs
+                    </div>
+                    <div class="col-md-2 col-2 text-left">
+                        <form action="/profile/updateNotification" method="POST">
+                            <input type="hidden" value="{{_id}}" name="id"/>
+                            <input type="hidden" value="{{#if read}}false{{else}}true{{/if}}" name="value"/>
+                            {{!-- <button type="submit" class="btn btn-info w-100"><span>{{#if read}}Mark as Unread{{else}}Mark as Read{{/if}}</span></button> --}}
+                            <button class="btn btn-sm btn-outline-success" type="submit">
+                                {{#if read}}Mark as Unread{{else}}Mark as Read{{/if}}
+                            </button>
+                        </form>
+                    </div>
+                    <div class="col-md-2 col-2 text-right">
+                        <form action="/profile/deleteNotification" method="POST">
+                            <input type="hidden" value="{{_id}}" name="id"/>
+                            <button class="btn btn-sm btn-outline-danger btn-round btn-icon" type="submit">
+                                <i valign="middle" class="fa fa-close"></i>
+                            </button>
+                        </form>
+                        
+                    </div>
+                    <div class="col-md-2 col-2 text-right">
+
+                    </div>
+                </div>
+<<<<<<<< HEAD:views/chat.hbs
+=======
+                        <!-- LOAD MORE -->
+                        {{!-- <div class="alert alert-info">
+                            <form action="/profile/loadMoreMessages" method="POST">
+                              <input type="hidden" value="5" name="limit"/>
+                              <button class="btn btn-info w-100" type="submit"><span>Load More Messages</span></button>
+                            </form>
+                          </div> --}}
+                        {{#each messages}}
+                             {{#if sent}}
+                             <div class="alert text-right alert-info">
+                                <span>{{message}} - <b>'{{senderName}}'</b></span>
+                            </div>
+                            {{else}}
+                            <div class="alert text-left alert-success">
+                                <span><b>'{{senderName}}'</b> - {{message}}</span>
+                            </div>
+                            {{/if}}
+                        {{/each}}
+                        <div class="alert alert-success" id="messageBox">
+                          <form method="POST" action="/profile/chat">
+                            From : <input type="text" class="w-100 text-right" name="from" readonly="readonly" value="{{user.email}}"/>
+                            To: <input type="text" name="to" class="w-100 text-right" readonly="readonly" value="{{recipient}}"/>
+                            <textarea class="w-100 text-right mt-3" name="message" placeholder="Message"></textarea>
+                            <input type="submit" class="btn btn-success float-right mt-4" value="send"/>
+                          </form>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -190,7 +314,7 @@
             </div>
           </div>
         </div>
-        <div class="row">
+        <div class="row mx-0">
           <div class="col-md-12">
             <div class="card">
               <div class="card-body">
@@ -234,10 +358,42 @@
                     </div>
                   </div>
                 </div>
+>>>>>>> 5f4bfc50b960b0b978896ec6f1ae0b27e4020f40
               </div>
             </div>
           </div>
         </div>
       </div>
+<<<<<<< HEAD
+========
+            </li>
+            <hr>
+            {{/each}}
+        </ul>
+>>>>>>>> 5f4bfc50b960b0b978896ec6f1ae0b27e4020f40:views/notifications.hbs
+    </div>
+</div>
+=======
+      <footer class="footer footer-black  footer-white ">
+        <div class="container-fluid">
+          <div class="row">
+            <nav class="footer-nav">
+              <ul>
+                <li><a href="https://www.creative-tim.com" target="_blank">Creative Tim</a></li>
+                <li><a href="https://www.creative-tim.com/blog" target="_blank">Blog</a></li>
+                <li><a href="https://www.creative-tim.com/license" target="_blank">Licenses</a></li>
+              </ul>
+            </nav>
+            <div class="credits ml-auto">
+              <span class="copyright">
+                © <script>
+                  document.write(new Date().getFullYear())
+                </script>, made with <i class="fa fa-heart heart"></i> by Creative Tim
+              </span>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   </div>
+>>>>>>> 5f4bfc50b960b0b978896ec6f1ae0b27e4020f40

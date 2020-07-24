@@ -32,9 +32,18 @@
         $('#displayPicInput').attr('value', dpCount);
     });
 
+<<<<<<< HEAD
     //MessageBox Scroll to bottom
     var topPos = document.getElementById('messageBox').offsetTop;
     document.getElementById('scroll-container').scrollTop = topPos-10;
+=======
+    //messageBox Scroll
+    function messageBoxScroll()
+    {
+        var topPos = document.getElementById('messageBox').offsetTop;
+        document.getElementById('scroll-container').scrollTop = topPos-10;
+    }
+>>>>>>> 5f4bfc50b960b0b978896ec6f1ae0b27e4020f40
     // Smooth scroll for the navigation menu and links with .scrollto classes
     $(document).on('click', '.nav-menu a, .mobile-nav a, .scrollto', function(e) {
         if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {

@@ -3,7 +3,10 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.render('coursedetails');
+    if (!req.session.user)
+        res.render('instructions',{instruction:true});
+    else
+        res.redirect('/profile');
 });
 
 module.exports = router;
