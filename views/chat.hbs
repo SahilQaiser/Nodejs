@@ -58,13 +58,6 @@
                         <h5 class="card-title">Messages</h5>
                       </div>
                       <div class="card-body scroll" id="scroll-container">
-                        <!-- LOAD MORE -->
-                        {{!-- <div class="alert alert-info">
-                            <form action="/profile/loadMoreMessages" method="POST">
-                              <input type="hidden" value="5" name="limit"/>
-                              <button class="btn btn-info w-100" type="submit"><span>Load More Messages</span></button>
-                            </form>
-                          </div> --}}
                         {{#each messages}}
                              {{#if sent}}
                              <div class="alert text-right alert-info">
@@ -76,13 +69,12 @@
                             </div>
                             {{/if}}
                         {{/each}}
+                        </div><div>
                         <div class="alert alert-success" id="messageBox">
-                          <form method="POST" action="/profile/chat">
-                            From : <input type="text" class="w-100 text-right" name="from" readonly="readonly" value="{{user.email}}"/>
-                            To: <input type="text" name="to" class="w-100 text-right" readonly="readonly" value="{{recipient}}"/>
-                            <textarea class="w-100 text-right mt-3" name="message" placeholder="Message"></textarea>
-                            <input type="submit" class="btn btn-success float-right mt-4" value="send"/>
-                          </form>
+                            From : <input type="text" id="from" class="w-100 text-right" name="from" readonly="readonly" value="{{user.email}}"/>
+                            To: <input type="text" name="to" id="to" class="w-100 text-right" readonly="readonly" value="{{recipient}}"/>
+                            <textarea class="w-100 text-right mt-3" id="message" name="message" placeholder="Message"></textarea>
+                            <input type="button" id="sendMessage" class="btn btn-success float-right mt-4" value="send"/>
                         </div>
                       </div>
                     </div>

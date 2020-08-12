@@ -76,6 +76,7 @@ router.post('/student', (req, res, next) => {
     const requirement = req.body.requirement;
     const email = req.body.email;
     const subjects = req.body.subjects;
+    const gender = req.body.gender;
     var student = new Students({
         degree: degree,
         school: school,
@@ -83,7 +84,8 @@ router.post('/student', (req, res, next) => {
         name: name,
         requirement: requirement,
         genderPreference: genderPreference,
-        email: email
+        email: email,
+        gender: gender
     });
     student.save((err) => {
         if (err) {
