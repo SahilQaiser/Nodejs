@@ -249,7 +249,7 @@ router.get('/chat', async function(req, res, next) {
             });
 
             //socket.on('broadcast', ()=>{
-                io.sockets.emit('broadcast', {message: 'Notifications here', from:'admin'});
+                //io.sockets.emit('broadcast', {message: 'Notifications here', from:'admin'});
             //}
         });
 

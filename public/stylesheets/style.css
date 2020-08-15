@@ -43,6 +43,9 @@ h6 {
 .logo-image-small > img {
     border-radius: 50%;
 }
+.borderbox{
+    border-radius:10px; box-shadow: 6px 6px 15px #cde5d7, -6px -6px 15px #cde5d7;
+}
 /*--------------------------------------------------------------
 # Back to top button
 --------------------------------------------------------------*/

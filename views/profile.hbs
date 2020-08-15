@@ -1,44 +1,39 @@
-<main id="main">
-<!-- ======= Breadcrumbs ======= -->
-<div class="wrapper pt-4">
-      {{#if firstTime}}
-          <div class="alert alert-info alert-dismissible fade show" style="position:absolute; bottom:100px; z-index:99">
-            <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
-              <i class="nc-icon nc-simple-remove"></i>
-            </button>
-            <span>Logged in Successfully...</span>
-          </div>
-      {{/if}}
-      <div class="content pt-5">
-        <div class="row mx-0">
-          <div class="col-lg-3 col-md-6 col-sm-6">
-            Section
-          </div>
-          <div class="col-lg-3 col-md-6 col-sm-6">
-            Section
-          </div>
-          <div class="col-lg-3 col-md-6 col-sm-6">
-            Section
-          </div>
-          <div class="col-lg-3 col-md-6 col-sm-6">
-            Section
-          </div>
-        </div>
-        <div class="row mx-0">
-          <div class="col-md-12">
-            Section
-          </div>
-        </div>
-        <div class="row mx-0">
-          <div class="col-md-4">
-            Section
-          </div>
-          <div class="col-md-8">
-            Section
-          </div>
-        </div>
+<!-- ======= Section One ======= -->
+<section class="d-flex justify-content-center align-items-start pb-0">
+    <div class="jumbotron jumbotron-fluid mt-3 borderbox" style="width: 97%;background-color: #fff">
+      <div class="container">
+        <h3 class="display-4">Section One heading</h3>
+        <p class="lead">helper text</p>
       </div>
-      {{>footer-dashboard}}
+    </div>
+</section>
+<!-- End Section One -->
+<!-- ======= Section Two ======= -->
+<section class="d-flex justify-content-center p-0">
+    <div class="jumbotron jumbotron-fluid mt-3 borderbox" style="width: 97%; background-color: #fff">
+      <div class="container">
+        <h3 class="display-4">Section two heading</h3>
+        <p class="lead">helper text</p>
+      </div>
+    </div>
+</section>
+<!-- End Section Two -->
+
+<main id="main" class="pt-5" style="margin-bottom: 100px;">
+<div class="row m-0 px-3">
+  <div class="d-flex justify-content-center col-md-12 borderbox" style="border-radius:15px;background-color:#fff;">
+    <div class="col-md-3 p-0 d-flex justify-content-center">
+      <h4>User Data</h4>
+    </div>
+    <div class="col-md-3 p-0 d-flex justify-content-center">
+      <h4>Instant Messages</h4>
+    </div>
+    <div class="col-md-3 p-0 d-flex justify-content-center">
+      <h4>Recommendations</h4>
+    </div>
+    <div class="col-md-3 p-0 d-flex justify-content-center">
+     <h4>More</h4>
     </div>
   </div>
+</div>
 </main>
