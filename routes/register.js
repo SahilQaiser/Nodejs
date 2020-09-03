@@ -76,6 +76,7 @@ router.post('/student', (req, res, next) => {
     const requirement = req.body.requirement;
     const email = req.body.email;
     const subjects = req.body.subjects;
+    const gender = req.body.gender;
     var student = new Students({
         degree: degree,
         school: school,
@@ -83,7 +84,8 @@ router.post('/student', (req, res, next) => {
         name: name,
         requirement: requirement,
         genderPreference: genderPreference,
-        email: email
+        email: email,
+        gender: gender
     });
     student.save((err) => {
         if (err) {
@@ -95,8 +97,6 @@ router.post('/student', (req, res, next) => {
             req.session.signup.roleform = true;
             req.session.firstTime = true;
             console.log('Student Information Stored');
-<<<<<<< HEAD
-=======
             var notification = new Notifications({
                 email : req.body.email,
                 content : 'You have registered Successfully',
@@ -107,7 +107,6 @@ router.post('/student', (req, res, next) => {
             notification.save((err)=>{
                 if(err){console.log(err + ' : Errror')};
             });
->>>>>>> 5f4bfc50b960b0b978896ec6f1ae0b27e4020f40
             res.redirect('/profile');
         }
     });

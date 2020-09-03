@@ -1,10 +1,6 @@
 var express = require('express');
 var router = express.Router();
-<<<<<<< HEAD
-var [Users, Students, Teachers, Messages] = require('../models/db');
-=======
 var [Users, Students, Teachers, Feedback, Messages, Notifications] = require('../models/db');
->>>>>>> 5f4bfc50b960b0b978896ec6f1ae0b27e4020f40
 
 async function getNotifications(req, res)
 {
@@ -30,6 +26,7 @@ async function getUserDetails(req, res) {
             req.session.curuser.email = user.email;
             req.session.curuser.phone = user.phone;
             req.session.curuser.about = user.about;
+            req.session.curuser.gender = user.gender;
             req.session.curuser.displayPic = user.displayPic;
             req.session.curuser.userRole = user.role;
         }
@@ -49,8 +46,7 @@ async function getUserDetails(req, res) {
                 }
             }
         });
-    }
-    if (req.session.curuser.userRole === 'teacher') {
+    }else if (req.session.curuser.userRole === 'teacher') {
         Teachers.findOne({ email: req.session.userEmail }, (err, teacher) => {
             if (err) {
                 console.log("An error occured while fetching all Teachers");
@@ -68,8 +64,7 @@ async function getUserDetails(req, res) {
                 }
             }
         });
-    }
-    if (req.session.curuser.userRole === 'admin') {
+    }else if (req.session.curuser.userRole === 'admin') {
         req.session.curuser.admin = true;
         req.session.curuser.student = false;
         req.session.curuser.teacher = false;
@@ -92,7 +87,6 @@ async function getStudentList(req, subjects) {
     subjects.forEach(subject => {
         Students.find({ subjects: subject }, (err, stds) => {
             stds.forEach(std => {
-
                 if (students.includes(std.email)) {
                     console.log('Student exists..');
                 } else {
@@ -107,6 +101,8 @@ async function getStudentList(req, subjects) {
 
 async function getTeacherList(req, subjects) {
     var teachers = [];
+    //var gender = (req.session.student.genderPreference=='both')?null:req.session.student.genderPreference;
+    //console.log('Gender: '+gender);
     req.session.recommendations = [];
     subjects.forEach(subject => {
         Teachers.find({ subjects: subject }, (err, tchs) => {
@@ -124,23 +120,6 @@ async function getTeacherList(req, subjects) {
     });
 }
 
-<<<<<<< HEAD
-async function getMessages(req, recipient)
-{
-    console.log("Msgslimit : "+req.session.limit);
-    var msgs = await Messages.find({$or: [{$and: [{from : req.session.userEmail },{to: recipient}]},{$and:[{to : req.session.userEmail },{from: recipient}]}]}).sort({created: 'desc'}).limit(req.session.limit);
-    var formattedMsgs = await formatMsgs(req, msgs);
-    return formattedMsgs;
-}
-async function formatMsgs(req, msgs)
-{
-    msgs.forEach(msg=>{
-        if(msg.to == req.session.userEmail)
-            msg.sent = true;
-        else msg.recieved = true;
-    });
-    return msgs.reverse();
-=======
 //Get Messages
 async function getMessages(req, recipient)
 {
@@ -165,7 +144,6 @@ async function formatMsgs(req,msgs)
         } else msg.sent = false;
     });
     return msgs;
->>>>>>> 5f4bfc50b960b0b978896ec6f1ae0b27e4020f40
 }
 /* GET home page. */
 router.get('/', async function(req, res, next) {
@@ -246,62 +224,43 @@ router.get('/user', async function(req, res, next) {
 });
 /* GET User Profile. */
 router.get('/chat', async function(req, res, next) {
-<<<<<<< HEAD
-=======
     console.log('Email : '+req.session.userEmail);
->>>>>>> 5f4bfc50b960b0b978896ec6f1ae0b27e4020f40
     if (!req.session.userEmail)
         res.redirect('/');
     else
     {
-<<<<<<< HEAD
-        req.session.limit = req.session.limit ? req.session.limit : 10;
-        if (req.session.curuser.teacher) { getStudentList(req, req.session.curuser.teacher.subjects); } else { getTeacherList(req, req.session.curuser.student.subjects); }
-        var messages = await getMessages(req, req.session.recipient);
-        res.render('chat', { messages: messages, recipient: req.session.recipient, recommendations: req.session.recommendations, user: req.session.curuser, layout: 'dashboard-layout' });
-    }
-});
-/* Chat Recipient */
-router.post('/recipient', async function(req,res,next){
-    req.session.recipient = req.body.recipient;
-    res.redirect('/profile/chat');
-});
-/* loadMoreMessages */
-router.post('/loadMoreMessages', async function(req,res,next){
-    req.session.limit+=parseInt(req.body.limit);
-    res.redirect('/profile/chat');
-});
-/* POST chat messages */
-router.post('/chat', function(req,res,next){
-    if (!req.session.userEmail)
-        res.redirect('/');
-    else {
-        console.log('to '+req.body.to);
-        console.log('from '+req.body.from);
-        console.log('message '+req.body.message);
-        var msg = new Messages({
-            to : req.body.to,
-            from : req.body.from,
-            message: req.body.message,
-            created: new Date()
-        });
-        msg.save((err)=>{
-            if(err){
-                console.log('Something bad happened, cant chat..');
-            }
-            else {
-                console.log('msg sent...');
-                res.redirect('/profile/chat');
-            }
-        });
-=======
+
         //req.session.limit = req.session.limit ? req.session.limit : 10;
+        /* 
+         Socket.io
+        */
+        io = req.app.get('socketio');
+        io.on('connection', function(socket){
+            socket.removeAllListeners();
+            console.log(req.session.userEmail+" connected...");
+            const chatroom = req.session.userEmail+":"+req.session.recipient;
+            console.log(chatroom);
+
+            //listen on new_message
+            socket.on(chatroom, (data) => {
+                if(data.to == req.session.recipient)
+                {
+                    saveChat(data.to, data.from, data.message);
+                    io.emit(chatroom, {message : data.message, from : data.from, to: data.to}); //self
+                }
+            });
+
+            //socket.on('broadcast', ()=>{
+                //io.sockets.emit('broadcast', {message: 'Notifications here', from:'admin'});
+            //}
+        });
+
+
         var count = await getNotificationsCount(req,res);
         var messages = await getMessages(req, req.session.recipient);
         console.log('message size : '+messages.length);
         if (req.session.curuser.teacher) {await getStudentList(req, req.session.curuser.teacher.subjects); } else {await  getTeacherList(req, req.session.curuser.student.subjects); }
         res.render('chat', {count: count, messages: messages, user: req.session.curuser,chat:true,recipient:req.session.recipient, recommendation:req.session.recommendations, layout: 'dashboard-layout' });
->>>>>>> 5f4bfc50b960b0b978896ec6f1ae0b27e4020f40
     }
 });
 // Change recipient
@@ -311,41 +270,32 @@ router.post('/recipient', async function(req,res,next){
     res.redirect('/profile/chat');
 })
 // Save Chat messages
-router.post('/chat', async function(req,res,next){
-    if (!req.session.userEmail)
-        res.redirect('/');
-    else
-    {
-        console.log('to '+req.body.to);
-        console.log('from '+req.body.from);
-        console.log('message '+req.body.message);
-        var msg = new Messages({
-            to : req.body.to,
-            from : req.body.from,
-            message: req.body.message,
-            created: new Date()
-        });
-        msg.save((err)=>{
-            if(err){
-                console.log('Something bad happened, cant chat..');
-            }
-            else {
-                console.log('msg sent...');
-                var notification = new Notifications({
-                    email : req.session.recipient,
-                    content : 'New Message Recieved',
-                    read : false,
-                    created: new Date(),
-                    link : '/profile/chat'
-                });
-                notification.save((err)=>{
-                    if(err){console.log(err + ' : Errror')};
-                });
-                res.redirect('/profile/chat');
-            }
-        });
-    }
-});
+async function saveChat(to, from, msg){
+    var msg = new Messages({
+        to : to,
+        from : from,
+        message: msg,
+        created: new Date()
+    });
+    msg.save((err)=>{
+        if(err){
+            console.log('Something bad happened, cant chat..');
+        }
+        else {
+            console.log('msg sent...');
+            var notification = new Notifications({
+                email : to,
+                content : 'New Message Recieved',
+                read : false,
+                created: new Date(),
+                link : '/profile/chat'
+            });
+            notification.save((err)=>{
+                if(err){console.log(err + ' : Errror')};
+            });
+        }
+    });
+};
 /* loadMoreMessages
 router.post('/loadMoreMessages', async function(req,res,next){
     req.session.limit+=parseInt(req.body.limit);

@@ -6,7 +6,7 @@ db.once('open', function() {
     console.log("Connected to MongoDB");
 });
 //User Schema
-var userSchema = new mongoose.Schema({ name: 'string', email: 'string', displayPic: 'string', about: 'string', password: 'string', phone: 'number', role: 'string' });
+var userSchema = new mongoose.Schema({ name: 'string',gender: 'string', email: 'string', displayPic: 'string', about: 'string', password: 'string', phone: 'number', role: 'string' });
 var Users = mongoose.model('Users', userSchema);
 //Student Schema
 var studentSchema = new mongoose.Schema({ name: 'string', degree: 'string', email: 'string', school: 'string', subjects: [{ type: String }], genderPreference: 'string', requirement: 'string' });

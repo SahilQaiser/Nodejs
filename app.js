@@ -6,6 +6,7 @@ var hbs = require('express-handlebars');
 var handlebars = require('handlebars');
 var logger = require('morgan');
 var cookieSession = require('cookie-session');
+var socket = require("socket.io");
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
 
 
@@ -18,20 +19,12 @@ var registerRouter = require('./routes/register');
 var profileRouter = require('./routes/profile');
 var app = express();
 
-// handlebars.registerHelper('ifCmp', (valueOne, options) => {
-//     if (valueOne == options.hash.value)
-//         return options.fn(this);
-//     else return options.inverse(this);
-// })
-
 app.set('trust proxy', 1);
 app.use(cookieSession({
     name: 'session',
     keys: ['jamia1234554321', 'jamia9087bhu']
 }));
 // view engine setup
-//app.set('views', path.join(__dirname, 'views'));
-//app.set('partials', path.join(__dirname, 'partials'))
 app.set('view engine', 'hbs');
 app.engine('hbs', hbs({
     extname: 'hbs',
@@ -59,9 +52,12 @@ app.use('/profile', profileRouter);
 app.use(function(req, res, next) {
     next(createError(404));
 });
-app.listen(4000, () => {
+const server = app.listen(4000, () => {
         console.log('Server Started at port 4000');
     })
+
+const io = socket(server);
+app.set('socketio',io);
     // error handler
 app.use(function(err, req, res, next) {
     // set locals, only providing error in development

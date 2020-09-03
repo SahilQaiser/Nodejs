@@ -40,22 +40,24 @@
               <p>Teachers List</p>
             </a>
           </li>
-          {{/if}}
-          {{#if user.teacher}}
-          <li class="{{#if recommendations}}active{{/if}}">
-            <a href="/profile/recommendations">
-              <i class="nc-icon nc-tile-56"></i>
-              <p>Students List</p>
-            </a>
-          </li>
-          {{/if}}
-          {{#if user.admin}}
-            <li  class="active-pro {{#if admin}}active{{/if}}">
-                <a href="/profile/admin">
-                <i class="nc-icon nc-spaceship"></i>
-                <p>Admin Panel</p>
-                </a>
-            </li>
+            {{else}}
+              {{#if user.teacher}}
+                <li class="{{#if recommendations}}active{{/if}}">
+                  <a href="/profile/recommendations">
+                    <i class="nc-icon nc-tile-56"></i>
+                    <p>Students List</p>
+                  </a>
+                </li>
+                  {{else}}
+                      {{#if user.admin}}
+                        <li class="active-pro {{#if admin}}active{{/if}}">
+                            <a href="/profile/admin">
+                            <i class="nc-icon nc-spaceship"></i>
+                            <p>Admin Panel</p>
+                            </a>
+                        </li>
+                      {{/if}}
+                {{/if}}
           {{/if}}
         </ul>
       </div>
@@ -72,7 +74,7 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="javascript:;">Welcome</a>
+            <a class="navbar-brand" href="javascript:;" id="board">Welcome! {{user.name}}</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
