@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/mentor', { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify:true });
+// mongoose.connect('mongodb://localhost/mentor', { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify:true });
+mongoose.connect('mongodb+srv://eram:1808@cluster0.o0kf2.gcp.mongodb.net/mentor?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify:true });
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection to MongoDB failed:'));
 db.once('open', function() {
